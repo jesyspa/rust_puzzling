@@ -1,5 +1,5 @@
 use std::ops::AddAssign;
-use crate::utils::bits::lsb_only;
+use crate::bits::lsb_only;
 
 fn get_parent(i: usize) -> usize {
   i - lsb_only(i)
