@@ -1,3 +1,4 @@
 pub mod bits;
-pub mod io;
 pub mod fenwick;
+pub mod io;
+pub mod segment;
