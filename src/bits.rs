@@ -2,14 +2,16 @@ pub fn lsb_only(i: usize) -> usize {
     i & i.overflowing_neg().0
 }
 
+pub fn make_mask_up_to(i: u32) -> usize {
+    (1 << i) - 1
+}
+
 pub fn msb(i: usize) -> u32 {
     usize::BITS - i.leading_zeros()
 }
 
 pub fn clear_msb(i: usize) -> usize {
-    let keep_count = msb(i) - 1;
-    let mask = (1 << keep_count) - 1;
-    i & mask
+    i & make_mask_up_to(msb(i) - 1)
 }
 
 #[cfg(test)]
@@ -23,6 +25,13 @@ mod tests {
             assert_eq!(lsb_only(n), n);
             assert_eq!(lsb_only(n + 1), 1);
         }
+    }
+
+    #[test]
+    fn make_mask_up_to_test() {
+        assert_eq!(make_mask_up_to(0), 0);
+        assert_eq!(make_mask_up_to(1), 1);
+        assert_eq!(make_mask_up_to(2), 3);
     }
 
     #[test]
