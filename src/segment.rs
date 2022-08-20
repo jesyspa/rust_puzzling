@@ -1,6 +1,6 @@
 use std::ops::Add;
 
-use crate::bits::{clear_msb, msb, make_mask_up_to};
+use crate::bits::{clear_msb, make_mask_up_to, msb};
 
 fn left_child(i: usize) -> usize {
     2 * clear_msb(i)
@@ -11,9 +11,9 @@ fn right_child(i: usize) -> usize {
 }
 
 fn leading_ones_run(i: usize) -> u32 {
-  let k1 = msb(i);
-  let k2 = msb(!(i | !make_mask_up_to(k1)));
-  k1 - k2
+    let k1 = msb(i);
+    let k2 = msb(!(i | !make_mask_up_to(k1)));
+    k1 - k2
 }
 
 fn split_on_leading_ones(i: usize) -> (u32, usize) {
@@ -22,16 +22,18 @@ fn split_on_leading_ones(i: usize) -> (u32, usize) {
 }
 
 fn lower_bound_impl(node: usize, num_leaves: usize) -> usize {
-    if node < num_leaves { node }
-    else { 
+    if node < num_leaves {
+        node
+    } else {
         let (k, i) = split_on_leading_ones(node);
         i << k
     }
 }
 
 fn upper_bound_impl(node: usize, num_leaves: usize) -> usize {
-    if node < num_leaves { node+1 }
-    else { 
+    if node < num_leaves {
+        node + 1
+    } else {
         let (k, i) = split_on_leading_ones(node);
         (i + 1) << k
     }
@@ -142,14 +144,14 @@ mod tests {
 
     #[test]
     fn leading_ones_run_test() {
-      assert_eq!(leading_ones_run(1), 1);
-      assert_eq!(leading_ones_run(2), 1);
-      assert_eq!(leading_ones_run(3), 2);
-      assert_eq!(leading_ones_run(5), 1);
-      assert_eq!(leading_ones_run(8), 1);
-      assert_eq!(leading_ones_run(12), 2);
-      assert_eq!(leading_ones_run(13), 2);
-      assert_eq!(leading_ones_run(15), 4);
+        assert_eq!(leading_ones_run(1), 1);
+        assert_eq!(leading_ones_run(2), 1);
+        assert_eq!(leading_ones_run(3), 2);
+        assert_eq!(leading_ones_run(5), 1);
+        assert_eq!(leading_ones_run(8), 1);
+        assert_eq!(leading_ones_run(12), 2);
+        assert_eq!(leading_ones_run(13), 2);
+        assert_eq!(leading_ones_run(15), 4);
     }
 
     #[test]
@@ -157,7 +159,7 @@ mod tests {
         let num_leaves = 8;
         for i in 0..num_leaves {
             assert_eq!(lower_bound_impl(i, num_leaves), i);
-            assert_eq!(upper_bound_impl(i, num_leaves), i+1);
+            assert_eq!(upper_bound_impl(i, num_leaves), i + 1);
         }
         assert_eq!(lower_bound_impl(8, num_leaves), 0);
         assert_eq!(upper_bound_impl(8, num_leaves), 2);
