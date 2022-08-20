@@ -8,3 +8,7 @@ edition = "2021"
 [[bin]]
 name = "kattis_sretan"
 path = "kattis/sretan.rs"
+
+[[bin]]
+name = "kattis_different"
+path = "kattis/different.rs"

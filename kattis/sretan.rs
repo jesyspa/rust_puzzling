@@ -2,7 +2,7 @@ use rust_puzzling::io::read;
 
 fn main() {
     let mut s = String::new();
-    let mut n = read::<usize>(&mut s);
+    let mut n = read::<usize>(&mut s).unwrap();
     let mut v = Vec::new();
     while n != 0 {
         let q = (n - 1) / 2;
