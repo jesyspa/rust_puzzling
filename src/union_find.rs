@@ -40,6 +40,8 @@ impl UnionFind {
     }
 
     pub fn union(&mut self, mut i: usize, mut j: usize) {
+        i = self.rep(i);
+        j = self.rep(j);
         if i == j {
             return;
         }
@@ -49,6 +51,14 @@ impl UnionFind {
         }
         self.0[j].parent = i;
         self.0[i].size += self.0[j].size;
+    }
+
+    pub fn num_partitions(&mut self) -> usize {
+        let mut s = std::collections::HashSet::new();
+        for i in 0..self.0.len() {
+            s.insert(self.rep(i));
+        }
+        s.len()
     }
 }
 
@@ -94,15 +104,26 @@ mod test {
     fn test_update_occurs() {
         let mut uf = UnionFind::new(6);
         uf.union(0, 1);
-        uf.union(1, 2);
         uf.union(2, 3);
-        uf.union(4, 0);
         assert_eq!(
             uf.0,
             &[
                 Node { parent: 6, size: 2 },
+                Node { parent: 0, size: 1 },
+                Node { parent: 6, size: 2 },
+                Node { parent: 2, size: 1 },
+                Node { parent: 6, size: 1 },
+                Node { parent: 6, size: 1 }
+            ]
+        );
+        uf.union(1, 2);
+        uf.union(4, 0);
+        assert_eq!(
+            uf.0,
+            &[
+                Node { parent: 6, size: 5 },
+                Node { parent: 0, size: 1 },
                 Node { parent: 0, size: 2 },
-                Node { parent: 1, size: 2 },
                 Node { parent: 2, size: 1 },
                 Node { parent: 0, size: 1 },
                 Node { parent: 6, size: 1 }
@@ -114,7 +135,7 @@ mod test {
         assert_eq!(
             uf.0,
             &[
-                Node { parent: 6, size: 4 },
+                Node { parent: 6, size: 5 },
                 Node { parent: 0, size: 1 },
                 Node { parent: 0, size: 1 },
                 Node { parent: 0, size: 1 },
@@ -122,5 +143,17 @@ mod test {
                 Node { parent: 6, size: 1 }
             ]
         );
+    }
+
+    #[test]
+    fn test_num_partitions() {
+        let mut uf = UnionFind::new(6);
+        assert_eq!(uf.num_partitions(), 6);
+        uf.union(0, 1);
+        uf.union(1, 2);
+        assert_eq!(uf.num_partitions(), 4);
+        uf.union(2, 3);
+        uf.union(4, 0);
+        assert_eq!(uf.num_partitions(), 2);
     }
 }

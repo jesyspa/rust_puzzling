@@ -12,3 +12,7 @@ path = "kattis/sretan.rs"
 [[bin]]
 name = "kattis_different"
 path = "kattis/different.rs"
+
+[[bin]]
+name = "kattis_minspantree"
+path = "kattis/minspantree.rs"
