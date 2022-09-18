@@ -16,3 +16,7 @@ path = "kattis/different.rs"
 [[bin]]
 name = "kattis_minspantree"
 path = "kattis/minspantree.rs"
+
+[[bin]]
+name = "kattis_wiseguy"
+path = "kattis/wiseguy.rs"
