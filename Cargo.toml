@@ -20,3 +20,7 @@ path = "kattis/minspantree.rs"
 [[bin]]
 name = "kattis_wiseguy"
 path = "kattis/wiseguy.rs"
+
+[[bin]]
+name = "kickstart_fabrics"
+path = "kickstart/round_2022_F/fabrics.rs"
