@@ -1,4 +1,5 @@
 use std::ops::Add;
+use std::iter::FromIterator;
 
 use crate::bits::{clear_msb, make_mask_up_to, msb};
 
@@ -39,7 +40,7 @@ fn upper_bound_impl(node: usize, num_leaves: usize) -> usize {
     }
 }
 
-pub struct SegmentTree<T>(Vec<T>);
+pub struct SegmentTree<T>(pub Vec<T>);
 
 impl<T> FromIterator<T> for SegmentTree<T>
 where
@@ -88,7 +89,7 @@ where
         self.0.len() - 1
     }
 
-    fn num_leaves(&self) -> usize {
+    pub fn num_leaves(&self) -> usize {
         (self.0.len() + 1) / 2
     }
 
@@ -135,6 +136,10 @@ where
             i = self.parent(i);
             self.0[i] = Self::recompute(&self.0, i);
         }
+    }
+
+    pub fn get_leaf(&self, i: usize) -> T {
+        self.0[i]
     }
 }
 
