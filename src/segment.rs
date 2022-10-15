@@ -1,5 +1,5 @@
-use std::ops::Add;
 use std::iter::FromIterator;
+use std::ops::Add;
 
 use crate::bits::{clear_msb, make_mask_up_to, msb};
 
