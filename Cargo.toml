@@ -24,3 +24,7 @@ path = "kattis/wiseguy.rs"
 [[bin]]
 name = "kickstart_fabrics"
 path = "kickstart/round_2022_F/fabrics.rs"
+
+[[bin]]
+name = "kickstart_walktober"
+path = "kickstart/round_2022_G/walktober.rs"
